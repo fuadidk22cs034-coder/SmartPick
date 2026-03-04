@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./styles.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+
 function App() {
 
   const [darkMode, setDarkMode] = useState(false);
@@ -27,19 +29,32 @@ function App() {
   }, [messages, recommendations]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
 
-    const userMessage = { sender: "user", text: input };
+    if (!input.trim() || loading) return;
+
+    const userInput = input;
+    const userMessage = { sender: "user", text: userInput };
+
     setMessages(prev => [...prev, userMessage]);
     setInput("");
     setLoading(true);
 
     try {
-      const response = await fetch("/chat", {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
+
+      const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: input })
+        body: JSON.stringify({ message: userInput }),
+        signal: controller.signal
       });
+
+      clearTimeout(timeout);
+
+      if (!response.ok) {
+        throw new Error("Server error");
+      }
 
       const data = await response.json();
 
@@ -52,8 +67,12 @@ function App() {
         setRecommendations(data.data || []);
       }
 
-    } catch {
-      setMessages(prev => [...prev, { sender: "bot", text: "Something went wrong." }]);
+    } catch (error) {
+      console.error("Error:", error);
+      setMessages(prev => [
+        ...prev,
+        { sender: "bot", text: "Server is waking up or something went wrong. Please try again." }
+      ]);
     }
 
     setLoading(false);
@@ -61,7 +80,12 @@ function App() {
 
   const startNewConversation = async () => {
     setIsClearing(true);
-    await fetch("/reset", { method: "POST" });
+
+    try {
+      await fetch(`${API_URL}/reset`, { method: "POST" });
+    } catch (error) {
+      console.error("Reset error:", error);
+    }
 
     setTimeout(() => {
       setMessages([initialGreeting]);
@@ -166,6 +190,7 @@ function App() {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* ===== INPUT AREA ===== */}
       <div className="input-area">
         <input
           type="text"
@@ -174,7 +199,9 @@ function App() {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} disabled={loading}>
+          {loading ? "..." : "Send"}
+        </button>
       </div>
 
     </div>
