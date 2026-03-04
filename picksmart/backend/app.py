@@ -1,40 +1,42 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-import uuid
-import os
 from conversation_manager import ConversationManager
+import os
 
 app = Flask(__name__)
-app.secret_key = "smartpick_secret_key"
 CORS(app)
 
+# In-memory session store
 managers = {}
 
-def get_manager():
-    if "session_id" not in session:
-        session["session_id"] = str(uuid.uuid4())
-
-    session_id = session["session_id"]
-
+def get_manager(session_id):
     if session_id not in managers:
         managers[session_id] = ConversationManager("phones.json")
-
     return managers[session_id]
 
 
 @app.route("/chat", methods=["POST"])
 def chat():
-    user_message = request.json.get("message", "")
-    manager = get_manager()
+    data = request.json
+    user_message = data.get("message", "")
+    session_id = data.get("session_id")
+
+    if not session_id:
+        return jsonify({"error": "Missing session_id"}), 400
+
+    manager = get_manager(session_id)
     response = manager.handle_message(user_message)
     return jsonify(response)
 
 
 @app.route("/reset", methods=["POST"])
 def reset():
-    session_id = session.get("session_id")
+    data = request.json
+    session_id = data.get("session_id")
+
     if session_id and session_id in managers:
         managers[session_id] = ConversationManager("phones.json")
+
     return jsonify({"status": "reset"})
 
 
