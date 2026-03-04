@@ -1,11 +1,10 @@
-import os
-
-from flask import Flask, request, jsonify, send_from_directory, session
+from flask import Flask, request, jsonify, session
 from flask_cors import CORS
 import uuid
+import os
 from conversation_manager import ConversationManager
 
-app = Flask(__name__, static_folder="../frontend/build", static_url_path="/")
+app = Flask(__name__)
 app.secret_key = "smartpick_secret_key"
 CORS(app)
 
@@ -23,11 +22,6 @@ def get_manager():
     return managers[session_id]
 
 
-@app.route("/")
-def serve():
-    return send_from_directory(app.static_folder, "index.html")
-
-
 @app.route("/chat", methods=["POST"])
 def chat():
     user_message = request.json.get("message", "")
@@ -42,11 +36,6 @@ def reset():
     if session_id and session_id in managers:
         managers[session_id] = ConversationManager("phones.json")
     return jsonify({"status": "reset"})
-
-
-@app.route("/<path:path>")
-def static_proxy(path):
-    return send_from_directory(app.static_folder, path)
 
 
 if __name__ == "__main__":
