@@ -6,6 +6,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 function App() {
 
   const [darkMode, setDarkMode] = useState(false);
+  const [sessionId] = useState(() => crypto.randomUUID());
 
   useEffect(() => {
     document.body.className = darkMode ? "dark" : "light";
@@ -41,12 +42,15 @@ function App() {
 
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
+      const timeout = setTimeout(() => controller.abort(), 40000);
 
       const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput }),
+        body: JSON.stringify({
+          message: userInput,
+          session_id: sessionId
+        }),
         signal: controller.signal
       });
 
@@ -82,7 +86,11 @@ function App() {
     setIsClearing(true);
 
     try {
-      await fetch(`${API_URL}/reset`, { method: "POST" });
+      await fetch(`${API_URL}/reset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ session_id: sessionId })
+      });
     } catch (error) {
       console.error("Reset error:", error);
     }
@@ -98,7 +106,6 @@ function App() {
   return (
     <div className={`app ${isClearing ? "fade-out" : "fade-in"}`}>
 
-      {/* ===== HEADER ===== */}
       <div className="header">
         <div className="logo">SmartPick</div>
         <div className="toggle-container">
@@ -114,11 +121,10 @@ function App() {
         </div>
       </div>
 
-      {/* ===== CHAT AREA ===== */}
       <div className="messages">
 
         {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender} fade-message`}>
+          <div key={index} className={`message ${msg.sender}`}>
             {msg.text}
           </div>
         ))}
@@ -126,7 +132,7 @@ function App() {
         {recommendations.length > 0 && (
           <div className="recommendations">
             {recommendations.map((phone, index) => (
-              <div key={index} className="card fade-card">
+              <div key={index} className="card">
 
                 {index === 0 && (
                   <div className="top-badge">Top Pick</div>
@@ -190,7 +196,6 @@ function App() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ===== INPUT AREA ===== */}
       <div className="input-area">
         <input
           type="text"
