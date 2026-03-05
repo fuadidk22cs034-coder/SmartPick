@@ -95,9 +95,11 @@ value_weight × value_score
 
 Performance score is adjusted using processor score:
 
+```
 effective_performance =
 0.7 × performance_score +
 0.3 × processor_score
+```
 
 ---
 
