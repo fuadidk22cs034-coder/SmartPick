@@ -105,7 +105,7 @@ effective_performance =
 
 ## Design Decisions
 
-Hybrid AI + Rule System
+**Hybrid AI + Rule System**
 
 Rule-based parsing is fast and reliable for structured patterns such as budgets and OS preferences.  
 AI fallback ensures the system can handle flexible natural language input.
@@ -118,11 +118,11 @@ AI is used only for natural language processing tasks:
 
 The recommendation logic itself remains deterministic to ensure consistency and explainability.
 
-Deterministic Recommendation Engine
+**Deterministic Recommendation Engine**
 
 The ranking algorithm is deterministic to guarantee repeatable and explainable recommendations.
 
-Variance-Based Question Selection
+**Variance-Based Question Selection**
 
 The system asks about features with the highest variance among remaining phones to maximize information gain.
 
@@ -130,17 +130,12 @@ The system asks about features with the highest variance among remaining phones 
 
 ## Edge Cases Considered
 
-No phones available within the specified budget
-
-User does not specify OS preference
-
-User provides ambiguous input
-
-AI response parsing failure
-
-Invalid feature rating input
-
-Empty recommendation results
+- No phones available within the specified budget
+- User does not specify OS preference
+- User provides ambiguous input
+- AI response parsing failure
+- Invalid feature rating input
+- Empty recommendation results
 
 Fallback logic ensures the system continues functioning in these scenarios.
 
