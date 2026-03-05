@@ -20,7 +20,7 @@ Tech Stack: **React • Flask • Groq API • Vercel • Render**
 
 ---
 
-# Problem Understanding
+## Problem Understanding
 
 Choosing a smartphone today is difficult because:
 
@@ -38,7 +38,7 @@ The goal of this project is to build a **decision companion system** that:
 
 ---
 
-# Assumptions Made
+## Assumptions Made
 
 - Users may describe preferences using natural language.
 - Budget is the primary filtering constraint.
@@ -47,7 +47,7 @@ The goal of this project is to build a **decision companion system** that:
 
 ---
 
-# Dataset
+## Dataset
 
 The system uses a structured dataset of 61 smartphones across both Android and iOS platforms.
 
@@ -67,7 +67,7 @@ Each phone includes:
 
 ---
 
-# Recommendation Algorithm
+## Recommendation Algorithm
 
 The system ranks smartphones using a weighted scoring model.
 
@@ -99,7 +99,7 @@ effective_performance =
 
 ---
 
-# Design Decisions
+## Design Decisions
 
 Hybrid AI + Rule System
 
@@ -124,7 +124,7 @@ The system asks about features with the highest variance among remaining phones 
 
 ---
 
-# Edge Cases Considered
+## Edge Cases Considered
 
 No phones available within the specified budget
 
@@ -142,7 +142,7 @@ Fallback logic ensures the system continues functioning in these scenarios.
 
 ---
 
-# Future Improvements
+## Future Improvements
 
 Larger smartphone dataset
 
