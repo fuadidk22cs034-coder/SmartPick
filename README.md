@@ -83,6 +83,7 @@ The recommendation process follows these steps:
 
 Scoring formula:
 
+```
 Score =
 camera_weight × camera_score +
 battery_weight × battery_score +
@@ -90,6 +91,7 @@ performance_weight × performance_score +
 display_weight × display_score +
 software_weight × software_score +
 value_weight × value_score
+```
 
 Performance score is adjusted using processor score:
 
