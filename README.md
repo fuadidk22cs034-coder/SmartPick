@@ -143,14 +143,10 @@ Fallback logic ensures the system continues functioning in these scenarios.
 
 ## Future Improvements
 
-Larger smartphone dataset
-
-User preference learning
-
-Explainable recommendation reasoning
-
-Real-time price tracking
-
-Phone comparison interface
+- Larger smartphone dataset
+- User preference learning
+- Explainable recommendation reasoning
+- Real-time price tracking
+- Phone comparison interface
 
 ---
