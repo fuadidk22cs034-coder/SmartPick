@@ -1,5 +1,6 @@
-#Data Flow
+# Data Flow
 
+```mermaid
 flowchart TD
 
 Start --> AskBudget
@@ -9,5 +10,4 @@ FilterPhones --> FeatureVariance
 FeatureVariance --> AskFeatureImportance
 AskFeatureImportance --> ComputeScores
 ComputeScores --> RankPhones
-
 RankPhones --> ShowTop3
