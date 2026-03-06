@@ -1,6 +1,4 @@
-# BUILD_PROCESS.md
-
-## Overview
+# BUILD PROCESS
 
 This document explains the development process of **SmartPick**, describing how the project evolved from a simple rule-based prototype into a deployed conversational smartphone recommendation system.
 

@@ -1,4 +1,4 @@
-# SmartPick – AI Assisted Smartphone Decision Companion
+# SmartPick
 
 SmartPick is an intelligent conversational system that helps users choose the best smartphone based on their preferences such as budget, operating system, and feature priorities like camera, battery, performance, display, and software quality.
 
@@ -76,24 +76,27 @@ The recommendation process follows these steps:
 1. Filter phones within the user's budget
 2. Apply OS preference filtering
 3. Ask the user about feature priorities
-4. Convert feature importance into weights
+4. Convert feature importance ratings into normalized feature weights
 5. Compute a weighted score for each phone
 6. Rank phones by score
 7. Return the top three recommendations
 
-Scoring formula:
+User feature importance ratings (1–5) are first amplified and normalized so that the weights sum to 1.  
+This emphasizes stronger preferences while keeping the scoring scale consistent.
+
+The final score for each phone is then calculated as:
 
 ```
 Score =
 camera_weight × camera_score +
 battery_weight × battery_score +
-performance_weight × performance_score +
+performance_weight × effective_performance +
 display_weight × display_score +
 software_weight × software_score +
 value_weight × value_score
 ```
 
-Performance score is adjusted using processor score:
+Where performance is adjusted using processor score:
 
 ```
 effective_performance =
