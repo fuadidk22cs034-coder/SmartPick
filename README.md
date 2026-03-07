@@ -153,3 +153,93 @@ Fallback logic ensures the system continues functioning in these scenarios.
 - Phone comparison interface
 
 ---
+
+## How to Set Up Locally
+
+If you would like to run the project locally, follow the steps below.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/FuadRahmanK/SmartPick.git
+cd SmartPick
+```
+
+---
+
+### 2. Backend Setup
+
+Navigate to the backend folder:
+
+```bash
+cd backend
+```
+
+Install the required Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Set your **Groq API key** as an environment variable.
+
+On **Linux / macOS**:
+
+```bash
+export GROQ_API_KEY=your_api_key_here
+```
+
+On **Windows (PowerShell)**:
+
+```bash
+setx GROQ_API_KEY "your_api_key_here"
+```
+
+Start the backend server:
+
+```bash
+python app.py
+```
+
+The backend will run on:
+
+http://localhost:5000
+
+---
+
+### 3. Frontend Setup
+
+Open a new terminal and navigate to the frontend folder:
+
+```bash
+cd frontend
+```
+
+Install the required Node dependencies:
+
+```bash
+npm install
+```
+
+Start the React development server:
+
+```bash
+npm start
+```
+
+The frontend will run on:
+
+http://localhost:3000
+
+---
+
+### 4. Using the Application
+
+Once both servers are running:
+
+1. Open **http://localhost:3000** in your browser.
+2. Start a conversation with SmartPick.
+3. Provide your preferences such as budget, OS, and feature priorities.
+4. The system will recommend the most suitable smartphones based on your inputs.
+
+---
