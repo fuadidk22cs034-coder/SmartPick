@@ -203,7 +203,9 @@ python app.py
 
 The backend will run on:
 
+```
 http://localhost:5000
+```
 
 ---
 
@@ -229,7 +231,9 @@ npm start
 
 The frontend will run on:
 
+```
 http://localhost:3000
+```
 
 ---
 
